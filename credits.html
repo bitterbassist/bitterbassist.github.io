@@ -22,7 +22,6 @@
     }
     .credits-container {
       text-align: center;
-      /* Adjust the following values for scrolling speed/duration */
       animation: scrollCredits 30s linear forwards;
     }
     @keyframes scrollCredits {
@@ -38,37 +37,28 @@
 <body>
   <div class="credits-wrapper">
     <div class="credits-container" id="credits">
-      <!-- Static credits content -->
-      <h1>Thank You For Watching!</h1>
-      <p>End Credits</p>
-      <p>Special Thanks To Our Audience</p>
-      <p>And All Supporters!</p>
-      <p>--------------------------</p>
-      <p>@revenant_oc</p>
-      <p>Streamer: Revenant</p>
-      <p>Gift Handler: Contributor 1</p>
-      <p>Follow Handler: Contributor 2</p>
-      <p>Like Handler: Contributor 3</p>
-      <p>Share Handler: Contributor 4</p>
-      <p>Subscribe Handler: Contributor 5</p>
-      <p>--------------------------</p>
+      <!-- Credits will be dynamically loaded here -->
     </div>
   </div>
-
   <script>
-    // Optionally, you can load dynamic credits from an external source.
-    // Uncomment and adjust the following code if you have a credits file (e.g., credits.txt).
+    // Replace with your API URL. For example, if using ngrok: "https://abcd1234.ngrok.io/credits"
+    const apiURL = 'https://bitterbassist.github.io/credits.html';
 
-    /*
-    fetch('credits.txt')
-      .then(response => response.text())
-      .then(text => {
-        // Convert each line into a paragraph tag.
-        const lines = text.split('\n').filter(line => line.trim() !== '');
-        document.getElementById('credits').innerHTML = lines.map(line => `<p>${line}</p>`).join('');
+    fetch(apiURL)
+      .then(response => response.json())
+      .then(data => {
+        const creditsContainer = document.getElementById('credits');
+        // Assuming data is an array of messages
+        if (Array.isArray(data)) {
+          creditsContainer.innerHTML = data.map(message => `<p>${message}</p>`).join('');
+        } else {
+          creditsContainer.innerHTML = `<p>Error loading credits: ${data.error}</p>`;
+        }
       })
-      .catch(error => console.error('Error loading credits:', error));
-    */
+      .catch(error => {
+        console.error('Error fetching credits:', error);
+        document.getElementById('credits').innerHTML = `<p>Error fetching credits</p>`;
+      });
   </script>
 </body>
 </html>
