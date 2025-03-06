@@ -25,7 +25,7 @@ if __name__ == '__main__':
     # Optionally, you can also test the random_bool function
     print("Random boolean value:", random_bool())
 
-@app.route('/credits')
+@app.route('/Users\Revenant\credits')
 def credits():
     try:
         with open("credits_log.json", "r") as file:
